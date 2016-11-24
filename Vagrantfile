@@ -65,7 +65,7 @@ $cleanup = <<SCRIPT
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/vivid64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
@@ -76,17 +76,17 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "sdnlab"
   # config.vm.network :private_network, ip: "192.168.0.100"
   config.vm.network :forwarded_port, guest:6633, host:6633 # OpenFlow
-  config.vm.network :forwarded_port, guest:8181, host:8181 # Web UI
-  config.vm.network :forwarded_port, guest:8080, host:8080 # ODL REST API
+  #config.vm.network :forwarded_port, guest:8181, host:8181 # Web UI
+  #config.vm.network :forwarded_port, guest:8080, host:8080 # ODL REST API
 
   ## Provisioning
   config.vm.provision :shell, privileged: false, :inline => $init
   config.vm.provision :shell, privileged: false, :inline => $ovs
   config.vm.provision :shell, privileged: false, :inline => $mininet
-  config.vm.provision :shell, privileged: false, :inline => $ryu
-  config.vm.provision :shell, privileged: false, :inline => $odl
-  config.vm.provision :shell, privileged: false, :inline => $onos
-  config.vm.provision :shell, privileged: false, :inline => $trema
+  #config.vm.provision :shell, privileged: false, :inline => $ryu
+  #config.vm.provision :shell, privileged: false, :inline => $odl
+  #config.vm.provision :shell, privileged: false, :inline => $onos
+  #config.vm.provision :shell, privileged: false, :inline => $trema
   config.vm.provision :shell, :inline => $cleanup
 
   ## SSH config
