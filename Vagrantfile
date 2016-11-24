@@ -80,6 +80,12 @@ Vagrant.configure("2") do |config|
   #config.vm.network :forwarded_port, guest:8080, host:8080 # ODL REST API
 
   ## Provisioning
+  #http://foo-o-rama.com/vagrant--stdin-is-not-a-tty--fix.html
+  config.vm.provision "fix-no-tty", type: "shell" do |s|
+    s.privileged = false
+    s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
+  end
+  
   config.vm.provision :shell, privileged: false, :inline => $init
   config.vm.provision :shell, privileged: false, :inline => $ovs
   config.vm.provision :shell, privileged: false, :inline => $mininet
