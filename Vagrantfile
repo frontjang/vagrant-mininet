@@ -36,7 +36,6 @@ $wireshark = <<SCRIPT
   sudo chmod 750 /usr/bin/dumpcap
   sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
   sudo getcap /usr/bin/dumpcap
-  logout
 SCRIPT
 
 $cleanup = <<SCRIPT
@@ -48,7 +47,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
   ## Guest config
