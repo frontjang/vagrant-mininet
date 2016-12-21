@@ -29,13 +29,24 @@ $mininet = <<SCRIPT
 SCRIPT
 
 $wireshark = <<SCRIPT
-  sudo apt-get install -y wireshark
+  # The OpenFlow dissector is available in the current Wireshark stable release (v1.12.x). As of 2014-11-04 it supports:
+
+  sudo apt-get -y build-dep wireshark
+  sudo apt-get -y install qt4-default
+  wget https://www.wireshark.org/download/src/all-versions/wireshark-1.12.13.tar.bz2
+  tar -xjvf wireshark-1.12.13.tar.bz2
+  cd wireshark-1.12.13/
+  ./configure
+  make
+  sudo make install
+  sudo ldconfig
+
   sudo groupadd wireshark
   sudo usermod -a -G wireshark vagrant
-  sudo chgrp wireshark /usr/bin/dumpcap
-  sudo chmod 750 /usr/bin/dumpcap
-  sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
-  sudo getcap /usr/bin/dumpcap
+  sudo chgrp wireshark /usr/local/bin/dumpcap
+  sudo chmod 750 /usr/local/bin/dumpcap
+  sudo setcap cap_net_raw,cap_net_admin=eip /usr/local/bin/dumpcap
+  sudo getcap /usr/local/bin/dumpcap
 SCRIPT
 
 $cleanup = <<SCRIPT
